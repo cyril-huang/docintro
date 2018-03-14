@@ -15,7 +15,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 doc	:= docintro
-font	:= WenQuanYi Zen Hei
+font	:= Noto Sans CJK TC
 
 all: $(doc).html $(doc).pdf
 
@@ -24,19 +24,23 @@ all: $(doc).html $(doc).pdf
 	rst2html5 $< > $@
 
 %.pdf: %.tex
-	sed -i '/setmainfont/d' $<
-	sed -i '/setsansfont/d' $<
-	sed -i '/setmonofont/d' $<
-	sed -i '1a\
-\\usepackage{fontspec}\
-\\setmainfont{$(font)}\
-\\setsansfont{$(font)}\
-\\setmonofont{$(font)}' $<
 	xelatex $<
 	xelatex $<
 
 %.tex: %.rst
 	rst2xetex $< > $@
+	sed -i '/setmainfont/d' $@
+	sed -i '/setsansfont/d' $@
+	sed -i '/setmonofont/d' $@
+	sed -i -e '/^\\documentclass.*/a\
+\\usepackage{fontspec}\
+\\XeTeXlinebreaklocale "zh"\
+\\XeTeXlinebreakskip = 0pt plus 1pt\
+\\usepackage{xeCJK}\
+\\setCJKmainfont{$(font)}\
+\\setCJKsansfont{$(font)}\
+\\setCJKmonofont{$(font)}\
+' $@
 
 clean:
 	rm -f *.aux *.log *.toc *.pdf *.html *.dvi *.out *.tex

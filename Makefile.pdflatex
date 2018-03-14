@@ -22,16 +22,16 @@ all: $(doc).html $(doc).pdf
 	rst2html5 $< > $@
 
 %.pdf: %.tex
-	sed -i -e '/^\\documentclass.*/a\
-\\usepackage{CJKutf8}\
-\\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,bookmarks,unicode]{hyperref}' $<
-	sed -i -e '/^\\begin{document}/a\\\begin{CJK}{UTF8}{bkai}' $<
-	sed -i -e '/^\\end{document}/i\\\clearpage\n\\end{CJK}' $<
 	pdflatex $<
 	pdflatex $<
 
 %.tex: %.rst
 	rst2latex $< > $@
+	sed -i -e '/^\\documentclass.*/a\
+\\usepackage{CJKutf8}\
+\\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,bookmarks,unicode]{hyperref}' $@
+	sed -i -e '/^\\begin{document}/a\\\begin{CJK}{UTF8}{bkai}' $@
+	sed -i -e '/^\\end{document}/i\\\clearpage\n\\end{CJK}' $@
 
 clean:
 	rm -f *.aux *.log *.toc *.pdf *.html *.dvi *.out *.tex

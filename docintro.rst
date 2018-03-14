@@ -331,16 +331,23 @@ CJK@XX 或者 CJK@XXX之類的
 ::
 
   \usepackage{fontspec}
-  \setmainfont{WenQuanYi Zen Hei}
-  \setsansfont{WenQuanYi Zen Hei}
-  \setmonofont{WenQuanYi Zen Hei}
+  \XeTeXlinebreaklocale "zh"
+  \XeTeXlinebreakskip = 0pt plus 1pt
+  \setmainfont{Nimbus Roman No9 L}
+  \setsansfont{Dejavu Serif}
+  \setmonofont{Latin Modern Mono Light}
+  \usepackage{xeCJK}
+  \setCJKmainfont{Noto Sans CJK TC}
+  \setCJKsansfont{Noto Serif CJK TC}
+  \setCJKmonofont{Noto Serif CJK TC}
 
+main, sans, mono
 分別為 roman，sans-serif, mono spaced字型，roman 字型主要用於當作基本字體，
 所以本文字體多為roman字體。 sans-serif 是字型沒有多餘的修飾線在字的尾巴，
 相對於serif字體是有襯線的。主要使用headline, caption標題中。
 mono 是用來做等寬的字型，所以很多terminal喜歡用這種字。還有 italic 是斜體。
-字型名字來自於系統的字， 而字型由於能使用ttf , openType ... ，只要下載ttf 
-檔，放到~/.fonts, 安裝 xfont-utils, 執行 mkfontscale, 安裝 fontconfig, 
+字型名字來自於系統的字， 而字型由於能使用ttf , openType ... ，只要下載ttf
+或otf 檔，放到~/.fonts, 安裝 xfont-utils, 執行 mkfontscale, 安裝 fontconfig,
 執行 fc-list 可以看到你所擁有的字型。以我來說
 
 ::
@@ -357,16 +364,18 @@ mono 是用來做等寬的字型，所以很多terminal喜歡用這種字。還�
   ...
 
 我有Bitstream Charter, 也有西藏文字Tibetan Machine Uni, 也有中文... 等等字型。
-這就是3個設定字型名字的來源，要填入的是第2欄位，'WenQuanYi Zen Hei'。所以不用
-再裝亂七八糟的 Big5 gb 碼的字型，也不再裝latex-cjk-chinese等東西了。 這樣比較
-乾淨。 而執行 xelatex 後會自動產生 pdf 檔。
+這就是3個設定字型名字的來源，要填入的是第2欄位，例如'WenQuanYi Zen Hei'。不用
+再裝亂七八糟的 Big5 gb 碼的字型。 這樣比較乾淨。比較麻煩的是這字型檔不是每個
+人都一樣有的，所以source跑起來英文不見得要設定這些font，不然找不到font也是會
+死掉的。而執行 xelatex 後會自動產生 pdf 檔。
 
 ::
 
   $ xelatex xxx.tex
+  $ xelatex xxx.tex
 
-不過比較pdflatex + CJK 轉出的效果，目前我是覺得xelatex轉出的效果還是怪怪的，
-沒有latex-cjk-chinese好。
+一樣要執行兩次才有像talbe of content 一些特殊的效果， 稍微比較pdflatex + CJK
+轉出的效果，目前我是覺得xelatex轉出的效果有點怪怪的，沒有pdflatex好。
 
 Docbook/SGML/XML
 ================
